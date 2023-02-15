@@ -1,0 +1,53 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: book-service
+  datasource:
+    username: user
+    password: password
+    url: jdbc:postgresql://127.0.0.1:5432/books
+  mvc:
+    problemdetails:
+      enabled: true
+
+logging:
+  level:
+    org.flywaydb.core.internal.license: warn
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        all: true
+        http.server.requests: true
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  prometheus:
+    metrics:
+      export:
+        step: 10s
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+      show-components: always
