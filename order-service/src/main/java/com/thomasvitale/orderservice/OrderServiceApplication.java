@@ -34,54 +34,5 @@ public class OrderServiceApplication {
 		SpringApplication.run(OrderServiceApplication.class, args);
 	}
 
-	@Bean
-	BookClient bookClient(WebClient.Builder builder, OrderProperties orderProperties) {
-		WebClient client = builder.baseUrl(orderProperties.bookService().toString()).build();
-		HttpServiceProxyFactory factory = HttpServiceProxyFactory
-				.builder(WebClientAdapter.forClient(client)).build();
-		return factory.createClient(BookClient.class);
-	}
-
 }
 
-@ConfigurationProperties(prefix = "order")
-record OrderProperties(URI bookService){}
-
-@RestController
-@RequestMapping("/orders")
-class OrderController {
-
-	private static final Logger log = LoggerFactory.getLogger(OrderController.class);
-
-	private final BookClient bookClient;
-
-	OrderController(BookClient bookClient) {
-		this.bookClient = bookClient;
-	}
-
-	@PostMapping
-	Mono<Order> orderBook(@RequestBody OrderRequest orderRequest) {
-		return bookClient.getBookById(orderRequest.bookId())
-				.doFirst(() -> log.info("Retrieving information for book with id: {}", orderRequest.bookId()))
-				.timeout(Duration.ofSeconds(1), Mono.empty())
-				.onErrorResume(WebClientResponseException.NotFound.class, exception -> Mono.empty())
-				.retryWhen(Retry.backoff(3, Duration.ofMillis(100)))
-				.map(book -> new Order(book.id(), book.title(), true))
-				.defaultIfEmpty(new Order(orderRequest.bookId(), null, false));
-	}
-
-}
-
-@HttpExchange("/books")
-interface BookClient {
-
-	@GetExchange("/{id}")
-	Mono<Book> getBookById(@PathVariable Long id);
-
-}
-
-record Book(Long id, String title){}
-
-record Order(Long bookId, String title, boolean approved){}
-
-record OrderRequest(Long bookId, int quantity){}

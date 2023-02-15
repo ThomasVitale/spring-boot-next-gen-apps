@@ -45,6 +45,3 @@ management:
         enabled: true
       show-details: always
       show-components: always
-
-order:
-  book-service: http://localhost:8080
