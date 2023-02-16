@@ -27,7 +27,6 @@ import org.springframework.web.service.annotation.HttpExchange;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @SpringBootApplication
-@ConfigurationPropertiesScan
 public class OrderServiceApplication {
 
 	public static void main(String[] args) {
