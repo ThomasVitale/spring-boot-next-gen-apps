@@ -44,7 +44,14 @@ tasks.named('test') {
 }
 
 tasks.named('bootBuildImage') {
-	imageName = "book-service"
-	builder = "ghcr.io/thomasvitale/builder-arm:tiny"
+	imageName = "order-service"
+
+	if (System.getProperty( "os.arch" ).toLowerCase().startsWith('aarch')) {
+		// This builder is only for ARM64 systems.
+		// For more info: https://github.com/thomasvitale/paketo-arm64
+		builder = "ghcr.io/thomasvitale/builder-arm:tiny"
+	}
+
+	// Set to "true" if you want to build a native image with GraalVM.
 	environment = ["BP_NATIVE_IMAGE": "false"]
 }
