@@ -4,10 +4,6 @@ server:
 spring:
   application:
     name: book-service
-  datasource:
-    username: user
-    password: password
-    url: jdbc:postgresql://127.0.0.1:5432/books
   mvc:
     problemdetails:
       enabled: true

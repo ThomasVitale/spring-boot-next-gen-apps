@@ -3,11 +3,8 @@ package com.thomasvitale.bookservice;
 import java.net.URI;
 import java.util.List;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.annotation.Id;
@@ -25,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 
 @SpringBootApplication
 public class BookServiceApplication {

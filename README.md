@@ -14,10 +14,10 @@ be powered by convenient interfaces for which the framework generates the implem
 
 ## Usage
 
-Run Postgres and the Grafana observability stack:
+Run the Grafana observability stack:
 
 ```bash
-docker-compose up -d postgres grafana
+docker-compose up -d
 ```
 
 You can run each application from Gradle:
