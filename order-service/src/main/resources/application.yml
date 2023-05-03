@@ -25,7 +25,6 @@ management:
         all: true
         http.server.requests: true
   tracing:
-    enabled: true
     sampling:
       probability: 1.0
   prometheus:
