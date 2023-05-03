@@ -7,12 +7,14 @@ services:
     depends_on:
       - loki
       - postgres
+      - tempo
     ports:
       - 8080:8080
     environment:
       - LOKI_URI=http://loki:3100/loki/api/v1/push
-      - MANAGEMENT_TRACING_ENABLED=true
       - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://tempo:9411
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/books
 
   order-service:
@@ -20,11 +22,11 @@ services:
     container_name: order-service
     depends_on:
       - loki
+      - tempo
     ports:
       - 8181:8181
     environment:
       - LOKI_URI=http://loki:3100/loki/api/v1/push
-      - MANAGEMENT_TRACING_ENABLED=true
       - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://tempo:9411
       - ORDER_BOOK_SERVICE=http://book-service:8080
 
