@@ -77,7 +77,7 @@ class OrderController {
 interface BookClient {
 
 	@GetExchange("/{id}")
-	Mono<Book> getBookById(@PathVariable Long id);
+	Mono<Book> getBookById(@PathVariable("id") Long id);
 
 }
 
