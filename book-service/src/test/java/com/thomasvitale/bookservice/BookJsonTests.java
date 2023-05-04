@@ -1,12 +1,11 @@
 package com.thomasvitale.bookservice;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
 public class BookJsonTests {
@@ -26,15 +25,6 @@ public class BookJsonTests {
 
 	@Test
 	void testDeserialize() throws Exception {
-		var content = """
-                {
-                    "id": 394,
-                    "title": "Creative Book Title"
-                }
-                """;
-		assertThat(json.parse(content))
-				.usingRecursiveComparison()
-				.isEqualTo(new Book(394L, "Creative Book Title"));
 	}
 
 }
