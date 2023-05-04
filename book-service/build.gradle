@@ -30,7 +30,7 @@ dependencies {
 
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	runtimeOnly 'org.postgresql:postgresql'
-	runtimeOnly 'com.github.loki4j:loki-logback-appender:1.4.0'
+	// runtimeOnly 'com.github.loki4j:loki-logback-appender:1.4.0'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
