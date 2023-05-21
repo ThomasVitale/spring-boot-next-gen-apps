@@ -20,7 +20,13 @@ Run the Grafana observability stack:
 docker-compose up -d grafana
 ```
 
-You can run each application from Gradle:
+Run Book Service:
+
+```bash
+./gradlew bootTestRun
+```
+
+Run Order Service:
 
 ```bash
 ./gradlew bootRun
