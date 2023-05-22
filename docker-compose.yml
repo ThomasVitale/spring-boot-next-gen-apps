@@ -1,49 +1,5 @@
 services:
 
-  # Applications
-  book-service:
-    image: "book-service"
-    container_name: book-service
-    depends_on:
-      - loki
-      - postgres
-      - tempo
-    ports:
-      - 8080:8080
-    environment:
-      - LOKI_URI=http://loki:3100/loki/api/v1/push
-      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://tempo:9411
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=password
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/books
-
-  order-service:
-    image: "order-service"
-    container_name: order-service
-    depends_on:
-      - loki
-      - tempo
-    ports:
-      - 8181:8181
-    environment:
-      - LOKI_URI=http://loki:3100/loki/api/v1/push
-      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://tempo:9411
-      - ORDER_BOOK_SERVICE=http://book-service:8080
-
-  # Data
-
-  postgres:
-    image: "postgres:15"
-    container_name: postgres
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=books
-
-  # Observability
-
   grafana:
     image: grafana/grafana:9.3.6
     container_name: grafana
