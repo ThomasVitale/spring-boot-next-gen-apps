@@ -18,17 +18,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'net.ttddyy.observation:datasource-micrometer-spring-boot:1.0.2'
-	implementation 'io.micrometer:micrometer-tracing-bridge-otel'
-	implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
 	implementation 'org.flywaydb:flyway-core'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	//developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
-	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	runtimeOnly 'org.postgresql:postgresql'
-	runtimeOnly 'com.github.loki4j:loki-logback-appender:1.4.0'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
