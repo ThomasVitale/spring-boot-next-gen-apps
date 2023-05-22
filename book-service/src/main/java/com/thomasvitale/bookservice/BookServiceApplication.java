@@ -1,6 +1,5 @@
 package com.thomasvitale.bookservice;
 
-import java.net.URI;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,10 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,33 +73,5 @@ class BookNotFoundException extends RuntimeException {
 
 @RestControllerAdvice
 class HttpExceptionHandler {
-
-	@ExceptionHandler(BookNotFoundException.class)
-	ProblemDetail handleBookNotFoundException(BookNotFoundException ex) {
-		ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-		problemDetail.setTitle("Book Not Found");
-		problemDetail.setType(URI.create("https://example.net/not-found"));
-		problemDetail.setProperty("severity", "low");
-		return problemDetail;
-	}
-
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-		var invalidFields = ex.getBindingResult().getAllErrors().stream()
-				.map(error -> {
-					String name = ((FieldError) error).getField();
-					String reason = error.getDefaultMessage();
-					return new InvalidField(name, reason);
-				})
-				.toList();
-
-		ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-		problemDetail.setTitle("Input data not valid");
-		problemDetail.setType(URI.create("https://example.net/validation-error"));
-		problemDetail.setProperty("invalid-fields", invalidFields);
-		return problemDetail;
-	}
-
-	record InvalidField(String name, String reason) {}
 
 }
