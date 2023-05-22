@@ -1,6 +1,7 @@
 package com.thomasvitale.bookservice;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -47,10 +47,9 @@ class BookController {
 	}
 
 	@GetMapping("{id}")
-	Book getBookById(@PathVariable Long id) {
+	Optional<Book> getBookById(@PathVariable Long id) {
 		log.info("Retrieving book with id: {}", id);
-		return bookRepository.findById(id)
-				.orElseThrow(() -> new BookNotFoundException(id));
+		return bookRepository.findById(id);
 	}
 
 	@PostMapping
@@ -64,14 +63,3 @@ class BookController {
 record Book(@Id Long id, @NotEmpty String title){}
 
 interface BookRepository extends ListCrudRepository<Book,Long>{}
-
-class BookNotFoundException extends RuntimeException {
-	public BookNotFoundException(Long id) {
-		super("Book with id " + id + " not found.");
-	}
-}
-
-@RestControllerAdvice
-class HttpExceptionHandler {
-
-}
