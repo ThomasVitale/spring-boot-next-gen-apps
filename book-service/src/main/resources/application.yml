@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: book-service
-  mvc:
-    problemdetails:
-      enabled: true
 
 logging:
   level:
